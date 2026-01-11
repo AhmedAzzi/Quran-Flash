@@ -1,0 +1,15 @@
+{
+  "name": "flipbook-electron",
+  "version": "1.0.0",
+  "description": "An Electron application for the flipbook.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.0.0"
+  }
+}

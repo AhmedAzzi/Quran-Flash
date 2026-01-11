@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>القرآن الكريم - Flipbook</title>
+
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+		rel="stylesheet">
+
+	<!-- Scripts -->
+	<script type="text/javascript" src="extras/jquery.min.1.7.js"></script>
+	<script type="text/javascript" src="extras/modernizr.2.5.3.min.js"></script>
+
+	<!-- Styles -->
+	<link rel="stylesheet" type="text/css" href="css/basic.css">
+	<link rel="stylesheet" type="text/css" href="css/suwar.css">
+</head>
+
+<body>
+
+	<div class="app-container">
+		<!-- Sidebar -->
+		<aside class="sidebar">
+			<div class="sidebar-header">
+				<h2>الفهرس</h2>
+				<div class="search-box">
+					<input type="text" id="surah-search" placeholder="بحث عن سورة...">
+				</div>
+				<div class="reciter-box">
+					<select id="reciter-select">
+						<!-- Dynamic population -->
+					</select>
+				</div>
+			</div>
+			<div id="suwar-list-container">
+				<div id="suwar-list">
+					<p>جاري التحميل...</p>
+				</div>
+			</div>
+		</aside>
+
+		<!-- Main Wrapper for Content and Player -->
+		<div class="main-wrapper">
+			<!-- Main Content -->
+			<main class="main-content">
+				<div class="flipbook-viewport">
+					<div class="container">
+						<div class="flipbook">
+							<!-- Pages will be loaded here -->
+						</div>
+					</div>
+				</div>
+
+				<!-- Navigation Controls -->
+				<div class="page-controls">
+					<button id="prev-page" title="الصفحة السابقة">‹</button>
+					<div class="slider-wrapper">
+						<input type="range" id="mushaf-slider" min="1" max="678" value="1">
+					</div>
+					<button id="next-page" title="الصفحة التالية">›</button>
+					<div id="page-tooltip">1</div>
+				</div>
+			</main>
+
+			<!-- Audio Player -->
+			<div class="audio-player-container">
+				<div class="player-left">
+					<span id="current-surah-name">اختر سورة للاستماع</span>
+					<span id="player-reciter-name">مشاري العفاسي</span>
+				</div>
+
+				<div class="player-center">
+					<div class="player-controls">
+						<button id="player-prev" title="السابق">⏮</button>
+						<button id="player-play-pause" class="play-btn">▶</button>
+						<button id="player-next" title="التالي">⏭</button>
+					</div>
+					<div class="player-progress-container">
+						<span id="current-time">00:00</span>
+						<div class="progress-bar-wrapper">
+							<input type="range" id="player-progress" min="0" max="100" value="0">
+							<div class="progress-fill"></div>
+						</div>
+						<span id="duration">00:00</span>
+					</div>
+				</div>
+
+				<div class="player-right">
+					<div class="volume-control">
+						<span id="mute-btn">🔊</span>
+						<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
+					</div>
+				</div>
+
+				<audio id="audio-player" style="display: none;"></audio>
+			</div>
+		</div>
+
+		<script src="js/mapping.js"></script>
+		<script src="js/basic.js"></script>
+
+</body>
+
+</html>

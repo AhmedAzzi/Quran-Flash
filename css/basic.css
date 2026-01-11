@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+/* Adjusted viewport to allow other content */
+.flipbook-viewport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Container */
+.flipbook-viewport .container {
+  position: relative;
+  margin: 0;
+}
+
+/* Flipbook dimensions - handled by JS and suwar.css */
+.flipbook-viewport .flipbook {
+  margin: 0 auto;
+}
+
+/* Page styles */
+.flipbook-viewport .page {
+  width: 550px;
+  height: 720px;
+  background-color: #1a1a1a;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Disable image selection */
+.flipbook-viewport .page img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  margin: 0;
+  display: block;
+}
+
+/* Page shadow transition */
+.flipbook-viewport .shadow {
+  transition: box-shadow 0.5s;
+  /* box-shadow: 0 0 20px #ccc; */
+  box-shadow: 0 0 20px rgba(107, 105, 105, 0.618);
+
+}
+
+/* When hovering over a page: show a hand cursor */
+.flipbook .page {
+  cursor: pointer;
+}
+
+/* Simulate “holding” with two fingers when clicking */
+.flipbook .page:active {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4) inset;
+  cursor: grabbing;
+}
