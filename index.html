@@ -57,45 +57,50 @@
 					</div>
 				</div>
 
-				<!-- Navigation Controls -->
-				<div class="page-controls">
-					<button id="prev-page" title="الصفحة السابقة">‹</button>
+			</main>
+
+			<!-- Integrated Bottom Bar -->
+			<div class="audio-player-container">
+				<!-- Right: Audio Info -->
+				<div class="player-info">
+					<span id="current-surah-name">سورة الفاتحة</span>
+					<span id="player-reciter-name">إبراهيم الأخضر</span>
+				</div>
+
+				<!-- Playback Buttons -->
+				<div class="player-playback">
+					<button id="player-prev" title="السابق">⏭</button>
+					<button id="player-play-pause" class="play-btn">▶</button>
+					<button id="player-next" title="التالي">⏮</button>
+				</div>
+
+				<!-- Audio Progress -->
+				<div class="player-progress-container">
+					<span id="current-time">00:00</span>
+					<div class="progress-bar-wrapper">
+						<input type="range" id="player-progress" min="0" max="100" value="0">
+						<div class="progress-fill"></div>
+					</div>
+					<span id="duration">01:01</span>
+				</div>
+
+				<!-- Page Controls -->
+				<div class="page-controls-integrated">
+					<span class="icon-book">📖</span>
+					<button id="next-page" class="nav-btn" title="الصفحة التالية">›</button>
+					<span id="page-number-left" class="page-num">1</span>
 					<div class="slider-wrapper">
 						<input type="range" id="mushaf-slider" min="1" max="678" value="1">
 					</div>
-					<button id="next-page" title="الصفحة التالية">›</button>
+					<span class="page-num max-num">678</span>
+					<button id="prev-page" class="nav-btn" title="الصفحة السابقة">‹</button>
 					<div id="page-tooltip">1</div>
 				</div>
-			</main>
 
-			<!-- Audio Player -->
-			<div class="audio-player-container">
-				<div class="player-left">
-					<span id="current-surah-name">اختر سورة للاستماع</span>
-					<span id="player-reciter-name">مشاري العفاسي</span>
-				</div>
-
-				<div class="player-center">
-					<div class="player-controls">
-						<button id="player-prev" title="السابق">⏮</button>
-						<button id="player-play-pause" class="play-btn">▶</button>
-						<button id="player-next" title="التالي">⏭</button>
-					</div>
-					<div class="player-progress-container">
-						<span id="current-time">00:00</span>
-						<div class="progress-bar-wrapper">
-							<input type="range" id="player-progress" min="0" max="100" value="0">
-							<div class="progress-fill"></div>
-						</div>
-						<span id="duration">00:00</span>
-					</div>
-				</div>
-
-				<div class="player-right">
-					<div class="volume-control">
-						<span id="mute-btn">🔊</span>
-						<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
-					</div>
+				<!-- Left: Volume -->
+				<div class="player-volume">
+					<span id="mute-btn">🔊</span>
+					<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
 				</div>
 
 				<audio id="audio-player" style="display: none;"></audio>

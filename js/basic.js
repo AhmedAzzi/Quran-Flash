@@ -67,6 +67,7 @@ async function loadApp() {
 	populateReciters();
 	renderSuwarList(allSuwar);
 	setupEventListeners();
+	resizeFlipbook(); // Scale it to fit current window size
 
 	// Restore last read page
 	const lastPage = localStorage.getItem('lastReadPage');
@@ -223,6 +224,8 @@ function setupEventListeners() {
 		else if (e.keyCode === 39) $('.flipbook').turn('next');
 	});
 
+	$(window).on('resize', resizeFlipbook);
+
 	$('#mushaf-slider').off('input').on('input', function () {
 		$('.flipbook').turn('page', this.value);
 	});
@@ -369,3 +372,24 @@ yepnope({
 	nope: ['lib/turn.html4.min.js'],
 	complete: loadApp
 });
+
+function resizeFlipbook() {
+	const viewport = $('.flipbook-viewport');
+	const flipbook = $('.flipbook');
+	
+	const availableWidth = viewport.width();
+	const availableHeight = viewport.height();
+
+	const originalWidth = 1100;
+	const originalHeight = 720;
+
+	let scale = Math.min(
+		availableWidth / originalWidth,
+		availableHeight / originalHeight
+	);
+
+	flipbook.css({
+		'transform': 'scale(' + scale + ')',
+		'transform-origin': 'center center'
+	});
+}
