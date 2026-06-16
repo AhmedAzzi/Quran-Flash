@@ -56,7 +56,6 @@ async function loadApp() {
 		autoCenter: true,
 		when: {
 			turned: function (e, page) {
-				$('#page-tooltip').text('صفحة ' + page);
 				$('#page-number-left').text(page);
 				$('#mushaf-slider').val(page);
 				localStorage.setItem('lastReadPage', page);
@@ -190,14 +189,6 @@ function renderSuwarList(suwar) {
             <div class="surah-type" title="${surah.makkia === 1 ? 'مكية' : 'مدنية'}">${typeIcon}</div>
         `;
 
-		surahDiv.onclick = () => {
-			$('.surah-item').removeClass('active');
-			$(surahDiv).addClass('active');
-			surahDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-			jumpToSurah(surah);
-			playSurah(surah, false);
-		};
-
 		suwarList.appendChild(surahDiv);
 	});
 }
@@ -208,29 +199,50 @@ function jumpToSurah(surah) {
 }
 
 function setupEventListeners() {
-	$('#surah-search').off('input').on('input', function () {
-		const query = $(this).val().toLowerCase();
-		const filtered = allSuwar.filter(s =>
-			s.name.includes(query) || s.id.toString() === query
-		);
-		renderSuwarList(filtered);
+	let searchTimer;
+
+	$('#suwar-list').on('click', '.surah-item', function () {
+		const id = $(this).data('id');
+		const surah = allSuwar.find(s => s.id === id);
+		if (!surah) return;
+		$('.surah-item').removeClass('active');
+		$(this).addClass('active');
+		this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		jumpToSurah(surah);
+		playSurah(surah, false);
 	});
 
-	$('#prev-page').off('click').on('click', () => $('.flipbook').turn('previous'));
-	$('#next-page').off('click').on('click', () => $('.flipbook').turn('next'));
+	$('#surah-search').on('input', function () {
+		clearTimeout(searchTimer);
+		const $input = $(this);
+		searchTimer = setTimeout(() => {
+			const query = $input.val().toLowerCase();
+			const filtered = allSuwar.filter(s =>
+				s.name.includes(query) || s.id.toString() === query
+			);
+			renderSuwarList(filtered);
+		}, 200);
+	});
 
-	$(window).unbind('keydown').bind('keydown', function (e) {
+	$('#prev-page').on('click', () => $('.flipbook').turn('previous'));
+	$('#next-page').on('click', () => $('.flipbook').turn('next'));
+
+	$(window).on('keydown', function (e) {
 		if (e.keyCode === 37) $('.flipbook').turn('previous');
 		else if (e.keyCode === 39) $('.flipbook').turn('next');
 	});
 
-	$(window).on('resize', resizeFlipbook);
+	let resizeTimer;
+	$(window).on('resize', () => {
+		cancelAnimationFrame(resizeTimer);
+		resizeTimer = requestAnimationFrame(resizeFlipbook);
+	});
 
-	$('#mushaf-slider').off('input').on('input', function () {
+	$('#mushaf-slider').on('input', function () {
 		$('.flipbook').turn('page', this.value);
 	});
 
-	$('#reciter-select').off('change').on('change', function () {
+	$('#reciter-select').on('change', function () {
 		const text = $('#reciter-select option:selected').text();
 		$('#player-reciter-name').text(text);
 		if (currentSurah) {
@@ -241,12 +253,10 @@ function setupEventListeners() {
 
 	const audio = document.getElementById('audio-player');
 
-	$('#player-play-pause').off('click').on('click', function () {
+	$('#player-play-pause').on('click', function () {
 		if (audio.paused) audio.play().catch(() => { });
 		else audio.pause();
 	});
-
-	$(audio).off('play pause timeupdate loadedmetadata');
 
 	$(audio).on('play', () => $('#player-play-pause').text('⏸'));
 	$(audio).on('pause', () => $('#player-play-pause').text('▶'));
@@ -262,12 +272,12 @@ function setupEventListeners() {
 		$('#duration').text(formatTime(audio.duration));
 	});
 
-	$('#player-progress').off('input').on('input', function () {
+	$('#player-progress').on('input', function () {
 		const time = (this.value / 100) * audio.duration;
 		audio.currentTime = time;
 	});
 
-	$('#volume-slider').off('input').on('input', function () {
+	$('#volume-slider').on('input', function () {
 		audio.volume = this.value;
 		if (this.value == 0) {
 			$('#mute-btn').text('🔇');
@@ -277,7 +287,7 @@ function setupEventListeners() {
 		}
 	});
 
-	$('#mute-btn').off('click').on('click', function () {
+	$('#mute-btn').on('click', function () {
 		audio.muted = !audio.muted;
 		if (audio.muted) {
 			$(this).text('🔇');
@@ -288,7 +298,7 @@ function setupEventListeners() {
 		}
 	});
 
-	$('#player-next').off('click').on('click', () => {
+	$('#player-next').on('click', () => {
 		if (currentSurah && currentSurah.id < 114) {
 			const next = allSuwar.find(s => s.id === currentSurah.id + 1);
 			if (next) {
@@ -299,7 +309,7 @@ function setupEventListeners() {
 		}
 	});
 
-	$('#player-prev').off('click').on('click', () => {
+	$('#player-prev').on('click', () => {
 		if (currentSurah && currentSurah.id > 1) {
 			const prev = allSuwar.find(s => s.id === currentSurah.id - 1);
 			if (prev) {
@@ -347,31 +357,7 @@ function playSurah(surah, autoplay = true) {
 	}
 }
 
-function addPage(page, book) {
-	var element = $('<div />', {});
-	if (book.turn('addPage', element, page)) {
-		element.html('<div class="gradient"></div><div class="loader"></div>');
-		loadPage(page, element);
-	}
-}
-
-function loadPage(page, pageElement) {
-	var img = $('<img />');
-	img.mousedown(function (e) { e.preventDefault(); });
-	img.load(function () {
-		$(this).css({ width: '100%', height: '100%' });
-		$(this).appendTo(pageElement);
-		pageElement.find('.loader').remove();
-	});
-	img.attr('src', 'data/Quran_Page_' + ('000' + page).slice(-3) + '.fbk');
-}
-
-yepnope({
-	test: Modernizr.csstransforms,
-	yep: ['lib/turn.js'],
-	nope: ['lib/turn.html4.min.js'],
-	complete: loadApp
-});
+loadApp();
 
 function resizeFlipbook() {
 	const viewport = $('.flipbook-viewport');

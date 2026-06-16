@@ -418,111 +418,6 @@ body {
     transform: translateX(-50%);
 }
 
-.page-controls-integrated {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 10px;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    margin: 0 5px;
-    position: relative;
-    flex: 0.6;
-}
-
-.page-controls-integrated:hover {
-    background: rgba(17, 24, 39, 0.3);
-}
-
-.page-controls-integrated button {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    color: #fff;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    line-height: 0;
-}
-
-.page-controls-integrated button:hover {
-    background: var(--accent-gold);
-    color: #000;
-    transform: scale(1.1);
-}
-
-.slider-wrapper {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-#page-number-left,
-#page-number-right {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    min-width: 25px;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    opacity: 0.6;
-}
-
-#mushaf-slider {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 2px;
-    /* Very thin */
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1px;
-    outline: none;
-}
-
-#mushaf-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 50%;
-    border: 2px solid var(--accent-gold);
-    transition: all 0.2s;
-}
-
-#mushaf-slider:hover::-webkit-slider-thumb {
-    transform: scale(1.4);
-    box-shadow: 0 0 8px var(--accent-gold);
-}
-
-#page-tooltip {
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    background: rgba(255, 255, 255, 0.95);
-    color: #000;
-    padding: 6px 14px;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 0.9rem;
-    pointer-events: none;
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    white-space: nowrap;
-}
-
-.page-controls-integrated:hover #page-tooltip,
-#mushaf-slider:active~#page-tooltip {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
 /* Modern Flat Audio Dock matching user screenshot */
 .audio-player-container {
     height: 50px;
@@ -811,11 +706,6 @@ body {
     background: var(--accent-gold);
     border: 2px solid #fff;
     border-radius: 50%;
-}
-
-#page-tooltip {
-    display: none !important;
-    /* Hide tooltip natively since UI solves the problem */
 }
 
 /* RTL Adjustments */
